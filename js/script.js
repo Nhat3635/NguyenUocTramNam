@@ -384,6 +384,52 @@ document.addEventListener("DOMContentLoaded", () => {
     bottomText.addEventListener("click", transitionToDetail);
   }
 
+  // Swipe up and mouse wheel scroll down on envelope screen to open it
+  let touchStartY = 0;
+  let touchEndY = 0;
+  if (screenEnvelope) {
+    screenEnvelope.addEventListener("touchstart", (e) => {
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    screenEnvelope.addEventListener("touchend", (e) => {
+      touchEndY = e.changedTouches[0].screenY;
+      const swipeDistance = touchStartY - touchEndY;
+      if (swipeDistance > 60) {
+        transitionToDetail();
+      }
+    }, { passive: true });
+
+    screenEnvelope.addEventListener("wheel", (e) => {
+      if (e.deltaY > 20) {
+        transitionToDetail();
+      }
+    }, { passive: true });
+  }
+
+  // High-performance IntersectionObserver for Scroll Reveal effects
+  const revealElements = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            revealObserver.unobserve(entry.target); // Unobserve once animated
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+    revealElements.forEach((el) => revealObserver.observe(el));
+  } else {
+    // Fallback for older browsers
+    revealElements.forEach((el) => el.classList.add("active"));
+  }
+
   // Back to envelope click handler
   const backButtons = document.querySelectorAll(".back-to-envelope");
   backButtons.forEach((btn) => {
