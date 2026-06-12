@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Mời Đám Cưới - Alexander & Madison</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Great Vibes, Montserrat, Playfair Display, Red Rose -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Red+Rose:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Project Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              cursive: ['"Great Vibes"', "cursive"],
+              serifTitle: ['"Playfair Display"', "serif"],
+              serifDisplay: ['"Red Rose"', "serif"],
+              sansClean: ['"Montserrat"', "sans-serif"],
+            },
+            colors: {
+              burgundy: {
+                50: "#fdf2f4",
+                100: "#fbe5ea",
+                200: "#f7ced7",
+                300: "#f0a8b9",
+                400: "#e57894",
+                500: "#d54d71",
+                600: "#bd2f52",
+                700: "#a3203f",
+                800: "#871c36",
+                900: "#731a31",
+                950: "#410915",
+              },
+              gold: {
+                100: "#fef9c3",
+                200: "#fef08a",
+                300: "#fde047",
+                400: "#facc15",
+                500: "#eab308",
+                600: "#ca8a04",
+                700: "#a16207",
+                800: "#854d0e",
+                900: "#713f12",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Combined Project CSS (includes 3D envelope and detail elements) -->
+  </head>
+  <body
+    class="bg-[#faf8f5] min-h-screen w-full relative overflow-x-hidden selection:bg-gold-200 selection:text-burgundy-950"
+  >
+    <!-- SCREEN 1: ENVELOPE INVITATION SCREEN -->
+    <div
+      id="screen-envelope"
+      class="w-full min-h-screen flex flex-col justify-center items-center py-6 md:py-8 px-4 relative transition-all duration-1000 z-10"
+    >
+      <!-- Subtle Background Texture overlay -->
+      <div
+        class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#800_1px,transparent_1px)] [background-size:16px_16px]"
+      ></div>
+
+      <!-- Background Decorative Elements: Left Floral -->
+      <div
+        class="absolute top-0 left-0 w-64 sm:w-80 md:w-[480px] aspect-square pointer-events-none z-0 opacity-80 watercolor-mask-left transform -translate-x-12 -translate-y-12"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=800&auto=format&fit=crop"
+          alt="Khung hoa bên trái"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Background Decorative Elements: Right Floral -->
+      <div
+        class="absolute bottom-0 right-0 w-64 sm:w-80 md:w-[480px] aspect-square pointer-events-none z-0 opacity-85 watercolor-mask-right transform translate-x-12 translate-y-12"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1533616688419-b7a585564566?q=80&w=800&auto=format&fit=crop"
+          alt="Khung hoa bên phải"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Header Section -->
+      <header class="text-center z-10 my-2 md:my-auto pb-2 md:pb-4 pt-2 md:pt-4">
+        <img
+          src="image/nguyenuoc.png"
+          alt="Nguyện Ước"
+          class="h-28 sm:h-40 md:h-44 mx-auto object-contain drop-shadow-md transition-all duration-300 hover:scale-[1.03]"
+        />
+        <div class="w-24 h-[1px] bg-gold-600/50 mx-auto mt-4"></div>
+      </header>
+
+      <!-- Main Centerpiece: Interactive Envelope Container -->
+      <main
+        class="w-[84%] sm:w-full max-w-[480px] aspect-[1.45/1] relative z-20 my-4 md:my-auto py-2 md:py-4"
+      >
+        <!-- Outer wrapper to hold 3D Perspective -->
+        <div class="w-full h-full perspective-1000 relative">
+          <!-- Envelope element -->
+          <div
+            id="envelope"
+            class="w-full h-full relative preserve-3d transition-all duration-700 cursor-pointer shadow-[0_15px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_25px_45px_rgba(110,29,46,0.15)] rounded-md transform hover:-translate-y-2 group z-10"
+          >
+            <!-- ENVELOPE BACK & POCKET LINER -->
+            <div
+              class="absolute inset-0 bg-burgundy-950 rounded-md overflow-hidden z-0"
+            >
+              <div
+                class="w-full h-full bg-gradient-to-b from-[#4a0812] to-[#2c040a] relative flex items-center justify-center"
+              >
+                <!-- Subtle Gold Inner Foil Border -->
+                <div
+                  class="absolute inset-2 border border-gold-600/30 rounded-md"
+                ></div>
+                <!-- Elegant monogram at the back of the envelope pocket -->
+                <span
+                  class="font-serifDisplay text-7xl text-[#3d070f] tracking-widest opacity-40"
+                  >A&M</span
+                >
+              </div>
+            </div>
+
+            <!-- THE INVITATION CARD (Sits inside the pocket) -->
+            <div
+              id="invitation-card"
+              class="absolute inset-[10px] bg-[#fdfbf7] rounded-sm shadow-inner z-10 transition-all duration-1000 ease-in-out transform scale-[0.98] opacity-90 translate-y-0"
+            >
+              <!-- Card Content Wrapper -->
+              <div
+                class="w-full h-full p-2.5 sm:p-6 md:p-8 flex flex-col justify-between items-center text-center border-2 border-double border-gold-600/40 rounded-sm overflow-y-auto card-scrollbar"
+              >
+                <!-- Card Header -->
+                <div class="space-y-0.5">
+                  <img
+                    src="image/Cụm logo.png"
+                    alt="Logo"
+                    class="h-8 sm:h-12 mx-auto object-contain opacity-95 mb-0.5"
+                  />
+                  <span
+                    class="block font-serifDisplay text-[8px] sm:text-[10px] md:text-xs tracking-[0.35em] text-gold-700 font-medium"
+                  >
+                    THIỆP MỜI THÀNH HÔN
+                  </span>
+                  <div class="w-8 h-[1px] bg-gold-600/30 mx-auto my-0.5"></div>
+                </div>
+
+                <!-- Couple's Names & Ceremony Type -->
+                <div class="my-0.5 sm:my-2 space-y-0.5">
+                  <img
+                    src="image/Vu Quy.png"
+                    alt="Vu Quy"
+                    class="h-6 sm:h-9 mx-auto object-contain opacity-90 mb-0.5"
+                  />
+                  <div class="flex flex-col items-center justify-center">
+                    <h1
+                      class="font-serifTitle text-xl sm:text-3xl md:text-4xl font-light text-burgundy-950 leading-tight"
+                    >
+                      Alexander &amp; Madison
+                    </h1>
+                    <img
+                      src="image/Nhẫn.png"
+                      alt="Nhẫn"
+                      class="h-5 sm:h-8 mx-auto object-contain my-1 opacity-90"
+                    />
+                  </div>
+                </div>
+
+                <!-- Details Section -->
+                <div
+                  class="space-y-0.5 sm:space-y-2 text-burgundy-900 select-text"
+                >
+                  <p class="font-cursive text-base sm:text-xl text-gold-800">
+                    cùng với hai bên gia đình
+                  </p>
+                  <p
+                    class="font-sansClean text-[7px] sm:text-[10px] md:text-xs tracking-widest uppercase font-semibold text-burgundy-950"
+                  >
+                    trân trọng kính mời quý khách tới dự buổi tiệc chung vui cùng
+                    chúng tôi
+                  </p>
+
+                  <div
+                    class="border-t border-b border-gold-600/20 py-1 my-1 sm:py-2 sm:my-2 space-y-0.5"
+                  >
+                    <p
+                      class="font-serifDisplay text-[10px] sm:text-sm md:text-base tracking-widest font-semibold text-burgundy-800"
+                    >
+                      THỨ BẢY, NGÀY 24 THÁNG 10 NĂM 2026
+                    </p>
+                    <p
+                      class="font-sansClean text-[7px] sm:text-[10px] tracking-wide text-burgundy-600"
+                    >
+                      VÀO LÚC BỐN GIỜ CHIỀU
+                    </p>
+                  </div>
+
+                  <!-- Venue Details -->
+                  <div class="space-y-0.5">
+                    <p
+                      class="font-serifTitle text-[10px] sm:text-sm md:text-base font-semibold text-burgundy-950"
+                    >
+                      KHU VƯỜN BURGUNDY GARDENS
+                    </p>
+                    <p
+                      class="font-sansClean text-[7px] sm:text-[10px] tracking-widest uppercase text-burgundy-600"
+                    >
+                      Thung lũng Napa, California
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Bottom RSVP Action -->
+                <div class="mt-1.5 sm:mt-3">
+                  <span
+                    class="inline-block font-sansClean text-[7px] sm:text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-gold-800 border border-gold-700/40 px-2.5 py-1 rounded-sm bg-stone-50/50 hover:bg-gold-700 hover:text-white hover:border-gold-700 transition-all duration-300 shadow-sm"
+                    onclick="event.stopPropagation(); alert('Hệ thống xác nhận tham dự đã được kết nối!');"
+                  >
+                    Xác nhận tham dự
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- FRONT ENVELOPE FLAPS (LEFT, RIGHT, BOTTOM OVERLAYS) -->
+            <div
+              class="absolute inset-0 pointer-events-none z-20"
+              style="transform: translateZ(4px)"
+            >
+              <svg
+                viewBox="0 0 480 320"
+                class="w-full h-full drop-shadow-[0_-5px_15px_rgba(0,0,0,0.1)]"
+              >
+                <!-- Left Flap -->
+                <path d="M 0 0 L 246 160 L 0 320 Z" fill="#7d1e2f" />
+                <!-- Right Flap -->
+                <path d="M 480 0 L 234 160 L 480 320 Z" fill="#7d1e2f" />
+                <!-- Bottom Flap -->
+                <path d="M 0 320 L 240 152 L 480 320 Z" fill="#8d2336" />
+                <path
+                  d="M 0 318 L 238 153"
+                  stroke="rgba(217, 119, 6, 0.2)"
+                  stroke-width="1.5"
+                  fill="none"
+                />
+                <path
+                  d="M 480 318 L 242 153"
+                  stroke="rgba(217, 119, 6, 0.2)"
+                  stroke-width="1.5"
+                  fill="none"
+                />
+              </svg>
+            </div>
+
+            <!-- TOP ENVELOPE FLAP & WAX SEAL -->
+            <div
+              id="envelope-flap-container"
+              class="absolute inset-0 w-full h-full origin-top preserve-3d transition-transform duration-[900ms] cubic-bezier(0.4, 0, 0.2, 1) z-30"
+              style="transform: rotateX(0deg)"
+            >
+              <!-- FRONT OF FLAP -->
+              <div class="absolute inset-0 w-full h-full backface-hidden z-[2]">
+                <svg
+                  viewBox="0 0 480 320"
+                  class="w-full h-full drop-shadow-[0_8px_10px_rgba(0,0,0,0.15)]"
+                >
+                  <!-- Crimson triangular top flap pointing down -->
+                  <path d="M 0 0 L 240 172 L 480 0 Z" fill="#9e2038" />
+                  <!-- Delicate Gold Inset border -->
+                  <path
+                    d="M 8 2 L 240 165 L 472 2"
+                    stroke="#eab308"
+                    stroke-width="1.5"
+                    stroke-opacity="0.6"
+                    fill="none"
+                  />
+                  <!-- Flap Heading Text -->
+                  <text
+                    x="240"
+                    y="55"
+                    text-anchor="middle"
+                    fill="#fef08a"
+                    font-family="'Red Rose', serif"
+                    font-size="12"
+                    letter-spacing="5"
+                    font-weight="bold"
+                    opacity="0.9"
+                  >
+                    TRÂN TRỌNG KÍNH MỜI!
+                  </text>
+                </svg>
+
+                <!-- WAX SEAL BUTTON -->
+                <div
+                  id="wax-seal"
+                  class="absolute top-[53.8%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_6px_12px_rgba(0,0,0,0.35)] flex items-center justify-center select-none"
+                  style="
+                    background: radial-gradient(
+                      circle,
+                      #b91c1c 0%,
+                      #7f1d1d 80%,
+                      #500 100%
+                    );
+                    border-radius: 48% 53% 49% 51% / 51% 49% 53% 47%;
+                    box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.4),
+                      inset -2px -2px 5px rgba(0, 0, 0, 0.6),
+                      0 6px 12px rgba(0, 0, 0, 0.35);
+                  "
+                >
+                  <!-- Outer concentric line -->
+                  <div
+                    class="absolute inset-2 border-2 border-dashed border-amber-600/30 rounded-full"
+                  ></div>
+                  <!-- Initials monogram -->
+                  <span
+                    class="font-serifDisplay text-amber-100 text-sm sm:text-base font-bold tracking-wider relative drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]"
+                  >
+                    A/M
+                  </span>
+                </div>
+              </div>
+
+              <!-- BACK OF FLAP -->
+              <div
+                class="absolute inset-0 w-full h-full backface-hidden [transform:rotateX(180deg)] z-[1]"
+              >
+                <svg viewBox="0 0 480 320" class="w-full h-full">
+                  <defs>
+                    <pattern
+                      id="gold-lining-pattern"
+                      width="24"
+                      height="24"
+                      patternUnits="userSpaceOnUse"
+                      patternTransform="rotate(45)"
+                    >
+                      <path
+                        d="M 0 0 L 12 12 L 24 0 L 12 -12 Z"
+                        fill="none"
+                        stroke="#ca8a04"
+                        stroke-width="0.5"
+                        stroke-opacity="0.3"
+                      />
+                      <path
+                        d="M 12 12 L 12 24"
+                        fill="none"
+                        stroke="#ca8a04"
+                        stroke-width="0.5"
+                        stroke-opacity="0.2"
+                      />
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="1.5"
+                        fill="#ca8a04"
+                        fill-opacity="0.15"
+                      />
+                    </pattern>
+                  </defs>
+                  <path d="M 0 0 L 240 172 L 480 0 Z" fill="#831e32" />
+                  <path
+                    d="M 4 2 L 240 168 L 476 2 Z"
+                    fill="url(#gold-lining-pattern)"
+                  />
+                  <path
+                    d="M 8 2 L 240 165 L 472 2"
+                    stroke="#eab308"
+                    stroke-width="1"
+                    stroke-opacity="0.5"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Dragon & Phoenix overlay -->
+            <!-- Phoenix (Left) -->
+            <div
+              class="absolute -left-5 sm:-left-12 md:-left-16 bottom-[-24px] sm:bottom-[-40px] w-24 sm:w-36 md:w-44 h-auto pointer-events-none z-[25] opacity-95 filter brightness-95 transition-all duration-300"
+              style="transform: translateZ(8px) rotate(-8deg)"
+            >
+              <img
+                src="image/5.png"
+                alt="Phụng"
+                class="w-full h-auto object-contain"
+              />
+            </div>
+            <!-- Dragon (Right) -->
+            <div
+              class="absolute -right-5 sm:-right-12 md:-right-16 top-[-32px] sm:top-[-50px] w-28 sm:w-40 md:w-48 h-auto pointer-events-none z-[25] opacity-95 filter brightness-95 transition-all duration-300"
+              style="transform: translateZ(8px) rotate(8deg)"
+            >
+              <img
+                src="image/4.png"
+                alt="Rồng"
+                class="w-full h-auto object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer Section -->
+      <footer
+        class="text-center z-10 my-2 md:my-auto pt-2 md:pt-4 space-y-2 sm:space-y-3"
+      >
+        <div
+          id="bottom-text"
+          class="font-serifDisplay text-[11px] sm:text-xs md:text-sm tracking-[0.4em] text-burgundy-800 font-semibold uppercase animate-pulse select-text"
+        >
+          NHẤN ĐỂ XEM CHI TIẾT.
+        </div>
+        <div class="flex justify-center" id="footer-arrow">
+          <svg
+            class="w-4 h-4 text-gold-600 animate-bounce"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </div>
+      </footer>
+    </div>
+
+    <!-- SCREEN 2: DETAILS SCREEN (HIDDEN BY DEFAULT) -->
+    <div
+      id="screen-detail"
+      class="hidden opacity-0 w-full min-h-screen relative transition-all duration-1000 z-10"
+    >
+      <!-- Subtle Background Pattern watermark so text remains highly readable -->
+      <div
+        class="absolute inset-0 opacity-[0.06] pointer-events-none z-0"
+        style="
+          background-image: url('image/Nền có họa tiết.jpg');
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+        "
+      ></div>
+
+      <!-- Floating Back Button -->
+      <button
+        class="back-to-envelope absolute top-4 left-4 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white backdrop-blur-md transition-all duration-300 shadow-md"
+        title="Quay lại thiệp mời"
+      >
+        <svg
+          class="w-5 h-5 transform rotate-180"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Content Container -->
+      <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- 1. HERO SECTION (Red Brocade Background Banner) -->
+        <header
+          class="w-full relative py-16 md:py-24 overflow-hidden border-b border-gold-600/20 bg-cover bg-center text-center flex flex-col items-center justify-center space-y-6"
+          style="background-image: url('image/Nền có họa tiết.jpg')"
+        >
+          <!-- Dark crimson overlay to enrich the brocade texture -->
+          <div
+            class="absolute inset-0 bg-burgundy-950/25 mix-blend-multiply pointer-events-none z-0"
+          ></div>
+
+          <div
+            class="relative z-10 w-full max-w-4xl mx-auto px-6 text-center flex flex-col items-center justify-center space-y-6"
+          >
+            <!-- Monogram / Logo -->
+            <div class="mb-4">
+              <img
+                src="image/Cụm logo.png"
+                alt="Monogram"
+                class="h-16 sm:h-24 mx-auto object-contain drop-shadow-md brightness-110"
+              />
+            </div>
+
+            <span
+              class="block font-serifTitle text-xs sm:text-sm tracking-[0.4em] text-gold-200 uppercase font-semibold"
+            >
+              DỰ ÁN TRÌNH DIỄN NGHỆ THUẬT
+            </span>
+
+            <div class="space-y-2 w-full">
+              <!-- Main Project Logo Image instead of Text -->
+              <div
+                class="w-full max-w-[420px] sm:max-w-[550px] md:max-w-[650px] mx-auto py-2"
+              >
+                <img
+                  src="image/nguyenuoc.png"
+                  alt="Nguyện Ước Trăm Năm"
+                  class="w-full h-auto object-contain mx-auto filter drop-shadow-md brightness-110 hover:scale-[1.01] transition-transform duration-500"
+                />
+              </div>
+              <p
+                class="font-cursive text-3.5xl sm:text-4.5xl md:text-5.5xl text-gold-100 mt-2 drop-shadow-sm"
+              >
+                “Chung một lời hứa, Vẹn một đời thương”
+              </p>
+            </div>
+
+            <!-- Wedding Date PNG Centerpiece -->
+            <div
+              class="py-4 md:py-8 w-full max-w-[320px] sm:max-w-[420px] mx-auto"
+            >
+              <img
+                src="image/21 - 07 - 2026.png"
+                alt="21.07.2026"
+                class="w-full h-auto object-contain mx-auto filter drop-shadow-md brightness-110 hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+
+            <div class="w-32 h-[1px] bg-gold-400/40 mx-auto"></div>
+
+            <div class="space-y-2 select-text">
+              <p
+                class="text-sm sm:text-base md:text-lg tracking-wide uppercase text-gold-200 font-bold"
+              >
+                18:30 | 21.07.2026 &bull; VẠN PHÁT RIVERSIDE
+              </p>
+              <p
+                class="text-xs sm:text-sm tracking-wider text-gold-100/90 font-medium"
+              >
+                02 Đường Nguyễn Văn Cừ, Phường Cái Khế, TP. Cần Thơ
+              </p>
+            </div>
+
+            <!-- Pulse Scroll Down indicator -->
+            <a
+              href="#slogan"
+              class="pt-8 animate-bounce inline-block text-gold-300 hover:text-white transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </header>
+
+        <!-- 2. SLOGAN SHOWCASE -->
+        <section
+          id="slogan"
+          class="w-full py-16 bg-white/60 border-t border-b border-gold-600/10 backdrop-blur-sm relative overflow-hidden"
+        >
+          <!-- Parallax floating decorations -->
+          <div
+            class="absolute left-[-5%] top-[10%] w-32 sm:w-44 md:w-56 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="-0.08"
+            data-base-transform="rotate(12deg)"
+            style="transform: rotate(12deg)"
+          >
+            <img src="image/8.png" alt="Deco" class="w-full h-auto" />
+          </div>
+          <div
+            class="absolute right-[-5%] bottom-[15%] w-32 sm:w-44 md:w-56 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="0.08"
+            data-base-transform="rotate(-15deg)"
+            style="transform: rotate(-15deg)"
+          >
+            <img src="image/9.png" alt="Deco" class="w-full h-auto" />
+          </div>
+
+          <!-- Decorative floral corners for slogan section -->
+          <div
+            class="absolute -top-12 -left-12 w-36 opacity-30 pointer-events-none"
+          >
+            <img
+              src="image/Layer 1.png"
+              alt="Deco"
+              class="w-full h-auto transform rotate-45"
+            />
+          </div>
+          <div
+            class="absolute -bottom-12 -right-12 w-36 opacity-30 pointer-events-none"
+          >
+            <img
+              src="image/Layer 2.png"
+              alt="Deco"
+              class="w-full h-auto transform rotate-45"
+            />
+          </div>
+
+          <div
+            class="w-full max-w-3xl mx-auto px-6 text-center space-y-6 relative z-10 select-text"
+          >
+            <span
+              class="block font-serifTitle text-[10px] sm:text-xs tracking-[0.35em] text-gold-700 uppercase font-semibold"
+            >
+              DỰ ÁN TRÌNH DIỄN NGHỆ THUẬT VĂN HÓA CƯỚI HỎI NAM BỘ
+            </span>
+
+            <!-- Centerpiece Slogan Image -->
+            <div class="w-full max-w-[380px] sm:max-w-[480px] mx-auto py-2">
+              <img
+                src="image/Slo.png"
+                alt="Slogan Nguyện Ước Trăm Năm"
+                class="w-full h-auto object-contain mx-auto drop-shadow-md hover:scale-[1.01] transition-transform duration-500"
+              />
+            </div>
+
+            <div
+              class="space-y-4 font-sansClean text-sm text-burgundy-900/90 leading-relaxed text-justify max-w-2xl mx-auto"
+            >
+              <p
+                class="font-serifTitle text-base sm:text-lg italic text-burgundy-950 font-semibold text-center mb-6"
+              >
+                “Chung một lời hứa, Vẹn một đời thương”
+              </p>
+              <p>
+                Đám cưới không chỉ là ngày vui của cô dâu chú rể, mà còn là ngày
+                sum họp của tình thân, của lễ nghĩa, của những nụ cười, lời chúc
+                và niềm tin về một mái ấm trăm năm. Từ mâm trầu cau, lễ rước
+                dâu, tiếng nhạc ngày cưới đến khoảnh khắc đôi lứa cùng bước vào
+                cuộc sống mới, mỗi chi tiết đều mang trong mình một vẻ đẹp rất
+                riêng: mộc mạc, nghĩa tình, sâu nặng và đôi lúc nó còn ghi dấu
+                ấn của cả một miền ký ức.
+              </p>
+              <p>
+                <strong>“Nguyện Ước Trăm Năm”</strong> là dự án trình diễn nghệ
+                thuật lấy cảm hứng từ văn hóa cưới hỏi Nam Bộ, được thực hiện
+                bởi <strong>Beacon Production</strong> và
+                <strong>APEX Team</strong> – sinh viên ngành Truyền thông &amp;
+                Tổ chức sự kiện, Trường Cao đẳng FPT Polytechnic Cần Thơ.
+              </p>
+              <p>
+                Thông qua hành trình cưới hỏi miền Nam qua ba thời kỳ:
+                <strong>Nam Kỳ xưa – thập niên 90/2000 – hiện đại</strong>, dự
+                án tái hiện sự chuyển mình của tình yêu, hôn nhân và nếp nhà
+                Việt trong ngày trọng đại. Chương trình không chỉ kể lại một đám
+                cưới trên sân khấu, mà còn mở ra những lát cắt văn hóa, ký ức và
+                cảm xúc gắn liền với đám cưới qua từng giai đoạn thời gian.
+              </p>
+              <p>
+                Dự án đón đầu xu hướng mùa cưới cuối năm, giúp các cặp đôi tìm
+                thấy ý tưởng cho hôn lễ của riêng mình, phù hợp với xu hướng
+                nhưng vẫn giữ được tinh thần truyền thống.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. WEDDING GALLERY -->
+        <section
+          id="gallery"
+          class="w-full py-20 overflow-hidden relative flex flex-col items-center justify-center"
+        >
+          <!-- Parallax floating decorations -->
+          <div
+            class="absolute right-[-8%] top-[5%] w-40 sm:w-56 md:w-72 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="-0.12"
+            data-base-transform="rotate(-45deg)"
+            style="transform: rotate(-45deg)"
+          >
+            <img src="image/6.png" alt="Deco" class="w-full h-auto" />
+          </div>
+          <div
+            class="absolute left-[-8%] bottom-[5%] w-40 sm:w-56 md:w-72 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="0.1"
+            data-base-transform="rotate(25deg)"
+            style="transform: rotate(25deg)"
+          >
+            <img src="image/7.png" alt="Deco" class="w-full h-auto" />
+          </div>
+
+          <!-- Section Header -->
+          <div class="text-center mb-12 space-y-2">
+            <h2
+              class="font-serifTitle text-3xl sm:text-4xl font-light text-burgundy-950 tracking-wide"
+            >
+              BỘ SƯU TẬP ẢNH CƯỚI
+            </h2>
+            <div class="w-20 h-[1.5px] bg-gold-600/40 mx-auto"></div>
+            <p
+              class="font-sansClean text-[10px] sm:text-xs tracking-[0.2em] text-burgundy-600 uppercase pt-2"
+            >
+              Các concept nghệ thuật ghi lại từng dấu ấn hạnh phúc
+            </p>
+          </div>
+
+          <!-- Horizontal scrollable slider wrapper -->
+          <div
+            id="gallery-container"
+            class="w-full flex overflow-x-auto gap-4 sm:gap-6 py-10 snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing"
+          >
+            <div class="w-[20%] sm:w-[35%] flex-shrink-0"></div>
+
+            <!-- CARD 1 -->
+            <div
+              data-index="0"
+              class="gallery-card w-[260px] sm:w-[330px] aspect-[3/4.2] flex-shrink-0 snap-center rounded-lg overflow-hidden border-2 border-double border-gold-600/30 bg-[#fdfbf7] p-2.5 shadow-md transform transition-all duration-500 scale-90 opacity-40 blur-[1px]"
+              onclick="openCategory('truyenthong')"
+            >
+              <div
+                class="w-full h-full relative overflow-hidden rounded-md border border-gold-600/10"
+              >
+                <img
+                  src="image/Truyền thống.png"
+                  alt="Concept Truyền Thống"
+                  class="w-full h-full object-cover"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white"
+                >
+                  <span
+                    class="text-[9px] tracking-[0.3em] text-gold-300 uppercase font-semibold"
+                    >Concept 01</span
+                  >
+                  <h3
+                    class="font-serifTitle text-lg font-light tracking-wide text-stone-100"
+                  >
+                    TRUYỀN THỐNG
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div
+              data-index="1"
+              class="gallery-card w-[260px] sm:w-[330px] aspect-[3/4.2] flex-shrink-0 snap-center rounded-lg overflow-hidden border-2 border-double border-gold-600/30 bg-[#fdfbf7] p-2.5 shadow-md transform transition-all duration-500 scale-90 opacity-40 blur-[1px]"
+              onclick="openCategory('namky')"
+            >
+              <div
+                class="w-full h-full relative overflow-hidden rounded-md border border-gold-600/10"
+              >
+                <img
+                  src="image/Nam Kỳ.png"
+                  alt="Concept Nam Kỳ"
+                  class="w-full h-full object-cover"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white"
+                >
+                  <span
+                    class="text-[9px] tracking-[0.3em] text-gold-300 uppercase font-semibold"
+                    >Concept 02</span
+                  >
+                  <h3
+                    class="font-serifTitle text-lg font-light tracking-wide text-stone-100"
+                  >
+                    NAM KỲ CỔ ĐIỂN
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div
+              data-index="2"
+              class="gallery-card w-[260px] sm:w-[330px] aspect-[3/4.2] flex-shrink-0 snap-center rounded-lg overflow-hidden border-2 border-double border-gold-600/30 bg-[#fdfbf7] p-2.5 shadow-md transform transition-all duration-500 scale-90 opacity-40 blur-[1px]"
+              onclick="openCategory('retro')"
+            >
+              <div
+                class="w-full h-full relative overflow-hidden rounded-md border border-gold-600/10"
+              >
+                <img
+                  src="image/90-2000.png"
+                  alt="Concept 90-2000"
+                  class="w-full h-full object-cover"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white"
+                >
+                  <span
+                    class="text-[9px] tracking-[0.3em] text-gold-300 uppercase font-semibold"
+                    >Concept 03</span
+                  >
+                  <h3
+                    class="font-serifTitle text-lg font-light tracking-wide text-stone-100"
+                  >
+                    THẬP NIÊN 90-2000
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 4 -->
+            <div
+              data-index="3"
+              class="gallery-card w-[260px] sm:w-[330px] aspect-[3/4.2] flex-shrink-0 snap-center rounded-lg overflow-hidden border-2 border-double border-gold-600/30 bg-[#fdfbf7] p-2.5 shadow-md transform transition-all duration-500 scale-90 opacity-40 blur-[1px]"
+              onclick="openCategory('hiendai')"
+            >
+              <div
+                class="w-full h-full relative overflow-hidden rounded-md border border-gold-600/10"
+              >
+                <img
+                  src="image/Hiện Đại.png"
+                  alt="Concept Hiện Đại"
+                  class="w-full h-full object-cover"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white"
+                >
+                  <span
+                    class="text-[9px] tracking-[0.3em] text-gold-300 uppercase font-semibold"
+                    >Concept 04</span
+                  >
+                  <h3
+                    class="font-serifTitle text-lg font-light tracking-wide text-stone-100"
+                  >
+                    HIỆN ĐẠI TỐI GIẢN
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-[20%] sm:w-[35%] flex-shrink-0"></div>
+          </div>
+
+          <!-- Indicators -->
+          <div class="flex flex-col items-center space-y-3 mt-4">
+            <p
+              class="text-[9px] sm:text-xs text-burgundy-600 tracking-wider animate-pulse uppercase"
+            >
+              &larr; Vuốt ngang để xem các concept &bull; Bấm vào để xem ảnh chi
+              tiết &rarr;
+            </p>
+
+            <div class="flex space-x-2.5" id="slider-dots">
+              <button
+                class="w-2 h-2 rounded-full bg-gold-400 transition-all duration-300 transform scale-125"
+                onclick="scrollToCard(0)"
+              ></button>
+              <button
+                class="w-2 h-2 rounded-full bg-burgundy-200/40 transition-all duration-300"
+                onclick="scrollToCard(1)"
+              ></button>
+              <button
+                class="w-2 h-2 rounded-full bg-burgundy-200/40 transition-all duration-300"
+                onclick="scrollToCard(2)"
+              ></button>
+              <button
+                class="w-2 h-2 rounded-full bg-burgundy-200/40 transition-all duration-300"
+                onclick="scrollToCard(3)"
+              ></button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. DYNAMIC MODAL / LIGHTBOX FOR ALBUM PHOTOS -->
+        <div
+          id="album-lightbox"
+          class="fixed inset-0 z-50 bg-burgundy-950/98 backdrop-blur-md flex flex-col items-center justify-between py-6 px-4 hidden opacity-0 transition-opacity duration-300 select-text text-white"
+        >
+          <!-- Lightbox Header -->
+          <div
+            class="w-full max-w-5xl flex justify-between items-center border-b border-gold-600/20 pb-4"
+          >
+            <div class="flex flex-col text-left">
+              <span
+                id="lightbox-label"
+                class="text-[9px] tracking-[0.35em] text-gold-400 font-semibold uppercase"
+                >CONCEPT</span
+              >
+              <h2
+                id="lightbox-title"
+                class="font-serifTitle text-xl sm:text-2xl text-stone-100 font-light uppercase tracking-wide"
+              >
+                Album Ảnh
+              </h2>
+            </div>
+
+            <button
+              onclick="closeLightbox()"
+              class="w-10 h-10 rounded-full flex items-center justify-center bg-gold-600 hover:bg-gold-500 text-burgundy-950 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 transition-all duration-300"
+              aria-label="Đóng Album"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Lightbox Photo Grid -->
+          <div
+            class="w-full max-w-5xl flex-grow overflow-y-auto my-6 px-2 pr-4 scroll-smooth"
+            id="lightbox-grid-container"
+          >
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+              id="lightbox-photo-grid"
+            ></div>
+          </div>
+
+          <!-- Lightbox Footer -->
+          <div
+            class="w-full max-w-5xl border-t border-gold-600/20 pt-4 text-center"
+          >
+            <p class="text-[10px] tracking-widest text-gold-400/80 uppercase">
+              Nguyện Ước Trăm Năm &bull; Album Ảnh Kỷ Niệm
+            </p>
+          </div>
+        </div>
+
+        <!-- FULLSCREEN PHOTO PREVIEW MODAL -->
+        <div
+          id="photo-preview"
+          class="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center hidden opacity-0 transition-opacity duration-300"
+          onclick="closePhotoPreview()"
+        >
+          <button
+            class="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center bg-white/90 hover:bg-white text-burgundy-950 shadow-[0_4px_12px_rgba(0,0,0,0.4)] hover:scale-105 active:scale-95 transition-all duration-200"
+            onclick="closePhotoPreview()"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+          <img
+            id="preview-image"
+            src=""
+            alt="Xem ảnh lớn"
+            class="max-w-[95%] max-h-[85%] object-contain rounded-md shadow-2xl border border-white/10"
+          />
+        </div>
+
+        <!-- 5. PROJECT TIMELINE / EVENT DETAILS -->
+        <section
+          class="w-full max-w-4xl mx-auto px-6 py-16 space-y-12 relative overflow-hidden"
+        >
+          <!-- Parallax floating decorations -->
+          <div
+            class="absolute left-[-10%] top-[-5%] w-44 sm:w-64 md:w-80 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="-0.1"
+            data-base-transform="rotate(-15deg)"
+            style="transform: rotate(-15deg)"
+          >
+            <img src="image/01.png" alt="Deco" class="w-full h-auto" />
+          </div>
+          <div
+            class="absolute right-[-8%] bottom-[10%] w-36 sm:w-52 md:w-64 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="0.08"
+            data-base-transform="rotate(-10deg)"
+            style="transform: rotate(-10deg)"
+          >
+            <img src="image/5.png" alt="Deco" class="w-full h-auto" />
+          </div>
+
+          <div class="text-center space-y-2">
+            <h2
+              class="font-serifTitle text-3xl font-light text-burgundy-950 tracking-wide"
+            >
+              LỊCH TRÌNH BIỂU DIỄN
+            </h2>
+            <div class="w-16 h-[1.5px] bg-gold-600/40 mx-auto"></div>
+          </div>
+
+          <!-- Timeline Items -->
+          <div
+            class="relative border-l border-gold-600/30 ml-4 md:ml-32 space-y-8 select-text"
+          >
+            <!-- Time 1 -->
+            <div class="relative pl-8 md:pl-12">
+              <div
+                class="absolute -left-2 top-1.5 w-4 h-4 rounded-full bg-gold-600 border-4 border-stone-100"
+              ></div>
+              <div
+                class="hidden md:block absolute -left-36 top-0 w-28 text-right font-serifTitle text-sm font-semibold text-gold-700 uppercase tracking-wider"
+              >
+                Đón Khách
+              </div>
+              <div class="space-y-1">
+                <span
+                  class="block md:hidden font-serifTitle text-xs font-semibold text-gold-700 uppercase tracking-wider"
+                  >Đón Khách</span
+                >
+                <h3
+                  class="font-serifTitle text-base sm:text-lg font-semibold text-burgundy-950"
+                >
+                  KHÔNG GIAN TRIỂN LÃM
+                </h3>
+                <p class="text-xs sm:text-sm text-burgundy-800/80">
+                  Khách mời check-in tại Vạn Phát Riverside, chụp ảnh kỷ niệm và
+                  thưởng thức không gian triển lãm tái hiện văn hóa cưới hỏi Nam
+                  Bộ qua các thời kỳ.
+                </p>
+              </div>
+            </div>
+
+            <!-- Time 2 -->
+            <div class="relative pl-8 md:pl-12">
+              <div
+                class="absolute -left-2 top-1.5 w-4 h-4 rounded-full bg-gold-600 border-4 border-stone-100"
+              ></div>
+              <div
+                class="hidden md:block absolute -left-36 top-0 w-28 text-right font-serifTitle text-sm font-semibold text-gold-700 uppercase tracking-wider"
+              >
+                Hồi 1
+              </div>
+              <div class="space-y-1">
+                <span
+                  class="block md:hidden font-serifTitle text-xs font-semibold text-gold-700 uppercase tracking-wider"
+                  >Hồi 1</span
+                >
+                <h3
+                  class="font-serifTitle text-base sm:text-lg font-semibold text-burgundy-950"
+                >
+                  KHAI MẠC &amp; ĐÁM CƯỚI NAM KỲ XƯA
+                </h3>
+                <p class="text-xs sm:text-sm text-burgundy-800/80">
+                  Đưa khán giả trở về không gian cưới hỏi Nam Bộ xưa, nơi những
+                  nghi thức truyền thống trang trọng, lễ nghĩa hai họ và những
+                  câu hò điệu lý chúc phúc được tái hiện đầy cảm xúc.
+                </p>
+              </div>
+            </div>
+
+            <!-- Time 3 -->
+            <div class="relative pl-8 md:pl-12">
+              <div
+                class="absolute -left-2 top-1.5 w-4 h-4 rounded-full bg-gold-600 border-4 border-stone-100"
+              ></div>
+              <div
+                class="hidden md:block absolute -left-36 top-0 w-28 text-right font-serifTitle text-sm font-semibold text-gold-700 uppercase tracking-wider"
+              >
+                Hồi 2
+              </div>
+              <div class="space-y-1">
+                <span
+                  class="block md:hidden font-serifTitle text-xs font-semibold text-gold-700 uppercase tracking-wider"
+                  >Hồi 2</span
+                >
+                <h3
+                  class="font-serifTitle text-base sm:text-lg font-semibold text-burgundy-950"
+                >
+                  ĐÁM CƯỚI THẬP NIÊN 90/2000
+                </h3>
+                <p class="text-xs sm:text-sm text-burgundy-800/80">
+                  Gợi lại những ký ức thân quen, hoài niệm thông qua âm nhạc,
+                  trang phục cưới và hình ảnh rước dâu bằng xe máy, xuồng ba lá
+                  giản dị của thế hệ trước.
+                </p>
+              </div>
+            </div>
+
+            <!-- Time 4 -->
+            <div class="relative pl-8 md:pl-12">
+              <div
+                class="absolute -left-2 top-1.5 w-4 h-4 rounded-full bg-gold-600 border-4 border-stone-100"
+              ></div>
+              <div
+                class="hidden md:block absolute -left-36 top-0 w-28 text-right font-serifTitle text-sm font-semibold text-gold-700 uppercase tracking-wider"
+              >
+                Hồi 3
+              </div>
+              <div class="space-y-1">
+                <span
+                  class="block md:hidden font-serifTitle text-xs font-semibold text-gold-700 uppercase tracking-wider"
+                  >Hồi 3</span
+                >
+                <h3
+                  class="font-serifTitle text-base sm:text-lg font-semibold text-burgundy-950"
+                >
+                  ĐÁM CƯỚI HIỆN ĐẠI &amp; GIAO LƯU
+                </h3>
+                <p class="text-xs sm:text-sm text-burgundy-800/80">
+                  Sự kết hợp tinh tế giữa truyền thống và nét thời thượng đương
+                  đại. Khép lại dự án bằng một chương mới tràn ngập ánh sáng,
+                  âm thanh nghệ thuật hiện đại kết hợp giao lưu cùng khán giả.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. GOOGLE MAPS LOCATION -->
+        <section
+          class="w-full max-w-4xl mx-auto px-6 pb-16 space-y-8 select-text relative overflow-hidden"
+        >
+          <!-- Parallax floating decorations -->
+          <div
+            class="absolute left-[-10%] bottom-[-5%] w-36 sm:w-52 md:w-64 opacity-15 pointer-events-none z-0 parallax-bg"
+            data-speed="-0.06"
+            data-base-transform="rotate(15deg)"
+            style="transform: rotate(15deg)"
+          >
+            <img src="image/4.png" alt="Deco" class="w-full h-auto" />
+          </div>
+
+          <div class="text-center space-y-2">
+            <h2
+              class="font-serifTitle text-2xl font-light text-burgundy-950 tracking-wide uppercase"
+            >
+              Bản Đồ Chỉ Đường
+            </h2>
+            <div class="w-12 h-[1.5px] bg-gold-600/40 mx-auto"></div>
+            <p
+              class="font-sansClean text-[11px] tracking-wider text-burgundy-800/80"
+            >
+              Vạn Phát Riverside &bull; 02 Đường Nguyễn Văn Cừ, Phường Cái Khế,
+              TP. Cần Thơ
+            </p>
+          </div>
+
+          <!-- Styled Map Frame Container -->
+          <div
+            class="w-full rounded-lg overflow-hidden border border-gold-600/30 shadow-lg relative bg-white p-2.5"
+          >
+            <div
+              class="w-full aspect-[16/9] sm:aspect-[21/9] rounded overflow-hidden"
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.449886703294!2d105.77812939882281!3d10.062174211710195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a07d563948b0ff%3A0xf61fd9c8147f08e6!2zTmjDoCBow6BuZywgS2jDoWNoIHPhuqFuIFbhuqFuIFBow6F0IFJpdmVyc2lkZQ!5e0!3m2!1svi!2s!4v1781250366792!5m2!1svi!2s"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER ACTION BUTTONS -->
+        <footer
+          class="w-full py-12 bg-burgundy-950 text-white border-t border-gold-600/30 text-center flex flex-col items-center justify-center space-y-6"
+        >
+          <div class="space-y-2">
+            <img
+              src="image/Cụm logo.png"
+              alt="Logo"
+              class="h-10 mx-auto object-contain brightness-0 invert opacity-90"
+            />
+            <p class="font-cursive text-2xl text-gold-300">
+              Trân Trọng Kính Mời Quý Khách
+            </p>
+          </div>
+
+          <div class="flex space-x-4">
+            <button
+              class="back-to-envelope inline-block font-sansClean text-[10px] tracking-[0.2em] uppercase text-gold-300 border border-gold-400/40 px-6 py-2.5 rounded-sm bg-transparent hover:bg-gold-700 hover:text-white hover:border-gold-700 transition-all duration-300 shadow-sm"
+            >
+              Mở Lại Thiệp
+            </button>
+          </div>
+
+          <p class="text-[9px] tracking-[0.2em] text-white/40 uppercase">
+            &copy; 2026 Nguyện Ước Trăm Năm Project
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- PERSISTENT FLOATING MUSIC PLAYER BUTTON (OUTSIDE SCREENS) -->
+    <div
+      id="music-player-container"
+      class="fixed bottom-6 right-6 z-50 flex items-center justify-center hidden opacity-0 transition-all duration-500"
+    >
+      <audio id="bg-music" loop>
+        <source src="music/wedding-bg.mp3" type="audio/mpeg" />
+      </audio>
+
+      <button
+        id="music-toggle"
+        class="w-12 h-12 rounded-full bg-burgundy-950 border-2 border-gold-400 text-gold-400 flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 relative group playing"
+        title="Bật/Tắt nhạc nền"
+      >
+        <span
+          class="absolute inset-1 rounded-full border border-gold-500/20 animate-spin-slow pointer-events-none opacity-0 group-[.playing]:opacity-100"
+        ></span>
+
+        <div id="icon-playing" class="block">
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+          </svg>
+        </div>
+
+        <div id="icon-paused" class="hidden">
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+
+    <script src="js/script.js" defer></script>
+    <script style="display:none"></script>
+  </body>
+</html>

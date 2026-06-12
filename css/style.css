@@ -1,0 +1,159 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 3D Envelope & Card Animation Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Envelope transitions */
+#envelope {
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s;
+}
+
+/* On hover (only when closed) */
+#envelope:not(.is-open):hover {
+  transform: translateY(-8px);
+}
+
+/* Envelope open state translations to prevent mobile viewport overflow */
+#envelope.is-open {
+  transform: translateY(45px);
+}
+@media (min-width: 640px) {
+  #envelope.is-open {
+    transform: translateY(0);
+  }
+}
+
+/* Flap container transitions */
+#envelope-flap-container {
+  transform-origin: top;
+  transform-style: preserve-3d;
+  z-index: 30;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.4s;
+}
+
+#envelope.is-open #envelope-flap-container {
+  transform: rotateX(180deg);
+  z-index: 10;
+}
+
+/* Invitation card transitions */
+#invitation-card {
+  z-index: 15;
+  opacity: 0.9;
+  transform: translateY(0) translateZ(-2px) scale(0.98);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, z-index 0s 0.45s, opacity 0.8s;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#envelope.is-open #invitation-card {
+  transform: translateY(-65%) translateZ(15px) scale(1.01);
+  z-index: 40;
+  opacity: 1;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.18), 0 10px 15px rgba(110,29,46,0.12);
+  transition: transform 0.8s cubic-bezier(0.34, 1.45, 0.64, 1) 0.35s, z-index 0s 0.35s, opacity 0.8s 0.35s;
+}
+
+/* Desktop sizing adjustments for card pull out height */
+@media (min-width: 640px) {
+  #envelope.is-open #invitation-card {
+    transform: translateY(-56%) translateZ(15px) scale(1.04);
+  }
+}
+
+/* Custom scrollbar for the invitation card details */
+.card-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.card-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.card-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(189, 47, 75, 0.2);
+  border-radius: 2px;
+}
+.card-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(189, 47, 75, 0.4);
+}
+
+/* Soft edge masking for Unsplash floral images to look like organic watercolor paintings */
+.watercolor-mask-left {
+  mask-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 72%);
+  -webkit-mask-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 72%);
+}
+
+.watercolor-mask-right {
+  mask-image: radial-gradient(circle at 80% 80%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 72%);
+  -webkit-mask-image: radial-gradient(circle at 80% 80%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0) 72%);
+}
+
+/* Custom slider no-scrollbar rules */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Elegant gold shimmer styling */
+.gold-shimmer {
+  background: linear-gradient(
+    135deg,
+    #a76d28 0%,
+    #dec282 50%,
+    #a76d28 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Scroll Reveal Animation CSS styles */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
