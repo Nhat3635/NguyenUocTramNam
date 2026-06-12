@@ -1,4 +1,38 @@
-// 1. PHOTO CATEGORIES CONFIGURATION (Using Local Images for Instant Offline Loading)
+// 1. CLOUDINARY CONFIGURATION & IMAGE CDN MAPPING
+const CLOUDINARY_CLOUD_NAME = "dei5euvmf";
+const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto`;
+
+const cloudinaryMapping = {
+  "image/nguyenuoc.png": "nguyenuoc_pcrcv3",
+  "image/5.png": "5_gi3ofm",
+  "image/4.png": "4_pcgars",
+  "image/Nền có họa tiết.jpg": "Nền_có_họa_tiết_wnesn4",
+  "image/21 - 07 - 2026.png": "21_-_07_-_2026_xwrnjf",
+  "image/8.png": "8_p0vzru",
+  "image/9.png": "9_lpv90u",
+  "image/Layer 1.png": "Layer_1_copy_2_b70tof",
+  "image/Layer 2.png": "Layer_2_copy_yrj5sa",
+  "image/Slo.png": "Slo_kfcuju",
+  "image/6.png": "6_oraetv",
+  "image/7.png": "7_uxhvyl",
+  "image/Truyền thống.png": "Truyền_thống_e41xph",
+  "image/Nam Kỳ.png": "Nam_Kỳ_jhr3el",
+  "image/Hiện Đại.png": "Hiện_Đại_xp8xcm",
+  "image/01.png": "01_txs5o4"
+};
+
+// Helper function to resolve image URL with optional width restriction
+window.getCloudinaryUrl = function (localPath, width = null) {
+  if (!localPath) return "";
+  const normalized = localPath.replace(/\\/g, '/');
+  const publicId = cloudinaryMapping[normalized];
+  if (publicId) {
+    const widthParam = width ? `,w_${width}` : '';
+    return `${CLOUDINARY_BASE_URL}${widthParam}/${publicId}`;
+  }
+  return localPath; // Fallback to local if not mapped (e.g. 90-2000.png or logo/rings if kept local)
+};
+
 const photoCategories = {
   truyenthong: {
     title: "Concept Truyền Thống Việt Nam",
@@ -38,7 +72,7 @@ const photoCategories = {
   },
 };
 
-// 2. GLOBAL LIGHTBOX & PREVIEW FUNCTIONS (Defined at top-level for instant availability)
+// 2. GLOBAL LIGHTBOX & PREVIEW FUNCTIONS
 window.openCategory = function (catId) {
   const category = photoCategories[catId];
   if (!category) return;
@@ -59,14 +93,16 @@ window.openCategory = function (catId) {
     const itemWrapper = document.createElement("div");
     itemWrapper.className =
       "group relative aspect-[3/4.2] overflow-hidden rounded border border-gold-600/10 cursor-pointer shadow-md bg-stone-100 hover:shadow-xl hover:border-gold-500 transition-all duration-300";
+    
+    // Pass original local path so preview can fetch high-res (w_1600)
     itemWrapper.onclick = () => window.previewFullPhoto(imgUrl);
 
     const img = document.createElement("img");
-    img.src = imgUrl;
+    // Resolve dynamic path via Cloudinary API with width 800 for optimization
+    img.src = window.getCloudinaryUrl(imgUrl, 800);
     img.alt = "Wedding Photo";
     img.className =
       "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.98] group-hover:brightness-100";
-    // Eager loading ensures images start loading immediately even inside hidden containers
     img.loading = "eager";
 
     const overlay = document.createElement("div");
@@ -110,7 +146,8 @@ window.previewFullPhoto = function (imgUrl) {
 
   if (!photoPreview || !previewImage) return;
 
-  previewImage.src = imgUrl;
+  // Load high-resolution (w_1600) image for full-screen preview
+  previewImage.src = window.getCloudinaryUrl(imgUrl, 1600);
   photoPreview.classList.remove("hidden");
   setTimeout(() => {
     photoPreview.classList.remove("opacity-0");
@@ -286,8 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
-
   // Parallax elements
   const parallaxElements = document.querySelectorAll(".parallax-bg");
 
@@ -338,8 +373,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         scrollToCard(0);
         setTimeout(updateActiveCard, 100);
-
-
       }, 50);
     }, 800);
   }
