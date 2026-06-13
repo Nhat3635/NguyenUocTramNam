@@ -4,7 +4,7 @@ const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}
 
 // 2. RSVP GOOGLE SHEETS SCRIPT URL CONFIGURATION
 // Paste your Google Apps Script Web App URL here. If left empty, it will simulate successful submission.
-const RSVP_SCRIPT_URL = "";
+const RSVP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_SWZJTzzWUZKxmqClEED_kY3xIyx2V4ZPU2fPJkeUKLb7SL1J05cXoyFmSPoqSNyO/exec";
 
 const cloudinaryMapping = {
   "image/nguyenuoc.png": "nguyenuoc_pcrcv3",
@@ -699,9 +699,12 @@ document.addEventListener("DOMContentLoaded", () => {
         rsvpLoadingScreen.classList.add("opacity-100");
       }
 
+      // Đảm bảo số điện thoại được lưu làm dạng Text trong Google Sheets để giữ nguyên số 0 ở đầu
+      const formattedPhone = phoneVal.startsWith("'") ? phoneVal : "'" + phoneVal;
+
       const payload = {
         name: nameVal,
-        phone: phoneVal,
+        phone: formattedPhone,
         attendance: attendanceVal === "yes" ? "Sẽ tham gia" : "Rất tiếc không thể đến",
         guests: guestsVal,
         wish: wishVal,
