@@ -22,7 +22,19 @@ const cloudinaryMapping = {
   "image/Truyền thống.png": "Truyền_thống_e41xph",
   "image/Nam Kỳ.png": "Nam_Kỳ_jhr3el",
   "image/Hiện Đại.png": "Hiện_Đại_xp8xcm",
-  "image/01.png": "01_txs5o4"
+  "image/01.png": "01_txs5o4",
+  "image/Cậu_Hai_Cô_Út_1_s34lny.jpg": "Cậu_Hai_Cô_Út_1_s34lny",
+  "image/Cậu_Hai_Cô_Út_tdr87h.jpg": "Cậu_Hai_Cô_Út_tdr87h",
+  "image/Cậu_Hai_Cô_Út_2_c7fkic.jpg": "Cậu_Hai_Cô_Út_2_c7fkic",
+  "image/Hiện_đại_1_xexupr.jpg": "Hiện_đại_1_xexupr",
+  "image/Hiện_Đại_qaxsxk.jpg": "Hiện_Đại_qaxsxk",
+  "image/Hiện_đại_2_g6jw18.jpg": "Hiện_đại_2_g6jw18",
+  "image/Nam_Kỳ_2_rys2ww.jpg": "Nam_Kỳ_2_rys2ww",
+  "image/Nam_Kỳ_1_wfebqn.jpg": "Nam_Kỳ_1_wfebqn",
+  "image/Nam_Kỳ_1_edfzvp.jpg": "Nam_Kỳ_1_edfzvp",
+  "image/2000_2_ho54me.jpg": "2000_2_ho54me",
+  "image/2000_1_nle622.jpg": "2000_1_nle622",
+  "image/90-2000_1_1_bihmmi.jpg": "90-2000_1_1_bihmmi"
 };
 
 // Helper function to resolve image URL with optional width restriction
@@ -42,36 +54,36 @@ const photoCategories = {
     title: "Concept Truyền Thống Việt Nam",
     label: "Trang Phục Áo Dài Cổ Truyền",
     images: [
-      "image/Truyền thống.png",
-      "image/01.png",
-      "image/Layer 1.png",
+      "image/Cậu_Hai_Cô_Út_1_s34lny.jpg",
+      "image/Cậu_Hai_Cô_Út_tdr87h.jpg",
+      "image/Cậu_Hai_Cô_Út_2_c7fkic.jpg",
     ],
   },
   namky: {
     title: "Concept Nam Kỳ Cổ Điển",
     label: "Hồn xưa đất Nam Kỳ, Thập niên 60-70",
     images: [
-      "image/Nam Kỳ.png",
-      "image/5.png",
-      "image/6.png",
+      "image/Nam_Kỳ_2_rys2ww.jpg",
+      "image/Nam_Kỳ_1_wfebqn.jpg",
+      "image/Nam_Kỳ_1_edfzvp.jpg",
     ],
   },
   retro: {
     title: "Concept Thập Niên 90-2000",
     label: "Ảnh Màu Film Nostalgia",
     images: [
-      "image/90-2000.png",
-      "image/7.png",
-      "image/8.png",
+      "image/2000_2_ho54me.jpg",
+      "image/2000_1_nle622.jpg",
+      "image/90-2000_1_1_bihmmi.jpg",
     ],
   },
   hiendai: {
     title: "Concept Hiện Đại Tối Giản",
     label: "Phong cách Tây Âu Sang Trọng",
     images: [
-      "image/Hiện Đại.png",
-      "image/9.png",
-      "image/Nhẫn.png",
+      "image/Hiện_đại_1_xexupr.jpg",
+      "image/Hiện_Đại_qaxsxk.jpg",
+      "image/Hiện_đại_2_g6jw18.jpg",
     ],
   },
 };
@@ -767,4 +779,64 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // --- IDLE AUTO-SCROLL FEATURE ---
+  let idleTimer = null;
+  let isAutoScrolling = false;
+  let autoScrollInterval = null;
+
+  function stopAutoScroll() {
+    if (isAutoScrolling) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+      isAutoScrolling = false;
+    }
+  }
+
+  function startAutoScroll() {
+    if (isAutoScrolling) return;
+
+    // Check if the user is currently on the details screen
+    if (!screenDetail || screenDetail.classList.contains("hidden")) return;
+
+    // Check if any modal/view is open
+    const isRsvpOpen = rsvpModal && !rsvpModal.classList.contains("hidden");
+    const isLightboxOpen = document.getElementById("album-lightbox") && !document.getElementById("album-lightbox").classList.contains("hidden");
+    const isPhotoPreviewOpen = document.getElementById("photo-preview") && !document.getElementById("photo-preview").classList.contains("hidden");
+
+    if (isRsvpOpen || isLightboxOpen || isPhotoPreviewOpen) return;
+
+    isAutoScrolling = true;
+    
+    autoScrollInterval = setInterval(() => {
+      const currentScroll = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      // Stop auto-scroll when reaching the bottom
+      if (currentScroll >= maxScroll - 1) {
+        stopAutoScroll();
+        return;
+      }
+      
+      window.scrollBy(0, 1);
+    }, 16); // ~62 pixels per second, snappier and extremely smooth (matching 60fps refresh rate)
+  }
+
+  function resetIdleTimer() {
+    stopAutoScroll();
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      startAutoScroll();
+    }, 5000); // 5 seconds of complete inactivity
+  }
+
+  // Bind interaction event listeners
+  const activityEvents = ["mousemove", "mousedown", "keydown", "touchstart", "wheel"];
+  activityEvents.forEach((event) => {
+    window.addEventListener(event, resetIdleTimer, { passive: true });
+  });
+
+  // Start idle timer initially
+  resetIdleTimer();
 });
+

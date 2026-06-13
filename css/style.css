@@ -147,15 +147,15 @@ html, body {
 /* Scroll Reveal Animation CSS styles */
 .reveal {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(60px) scale(0.97);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
 
 .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* ==========================================
@@ -312,23 +312,22 @@ html, body {
   transform: translateY(-1px) scale(0.97) !important;
 }
 
-/* Custom header background centering rules to correct shifted circle in logochinh.png */
 .header-bg-custom {
-  background-image: url('https://res.cloudinary.com/dei5euvmf/image/upload/f_auto,q_auto/logochinh_wegtlm');
+  background-image: url('https://res.cloudinary.com/dei5euvmf/image/upload/f_auto,q_auto/thiep_xafk5k');
   background-size: cover;
-  background-position: 46% center; /* Mobile default centering */
+  background-position: center center; /* Centered on all screens */
   background-repeat: no-repeat;
 }
 
 @media (min-width: 640px) {
   .header-bg-custom {
-    background-position: 42% center;
+    background-position: center center;
   }
 }
 
 @media (min-width: 768px) {
   .header-bg-custom {
-    background-position: 36% center;
+    background-position: center center;
   }
 }
 
@@ -363,4 +362,19 @@ html, body {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Gentle Breathing Animation for Cover Invitation Card */
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+.animate-breathing {
+  animation: breathing 4.5s ease-in-out infinite;
+  will-change: transform;
 }
