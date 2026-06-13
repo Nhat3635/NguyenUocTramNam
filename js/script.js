@@ -531,28 +531,6 @@ document.addEventListener("DOMContentLoaded", () => {
     bottomText.addEventListener("click", transitionToDetail);
   }
 
-  // Swipe up and mouse wheel scroll down on envelope screen to open it
-  let touchStartY = 0;
-  let touchEndY = 0;
-  if (screenEnvelope) {
-    screenEnvelope.addEventListener("touchstart", (e) => {
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    screenEnvelope.addEventListener("touchend", (e) => {
-      touchEndY = e.changedTouches[0].screenY;
-      const swipeDistance = touchStartY - touchEndY;
-      if (swipeDistance > 60) {
-        transitionToDetail();
-      }
-    }, { passive: true });
-
-    screenEnvelope.addEventListener("wheel", (e) => {
-      if (e.deltaY > 20) {
-        transitionToDetail();
-      }
-    }, { passive: true });
-  }
 
   // High-performance IntersectionObserver for Scroll Reveal effects
   const revealElements = document.querySelectorAll(".reveal");
