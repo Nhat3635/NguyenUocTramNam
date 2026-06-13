@@ -157,3 +157,210 @@ html, body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ==========================================
+   RSVP Modal Custom Premium Styles
+   ========================================== */
+
+/* Elegant spring-bounce transition for modal */
+#rsvp-modal {
+  transition: opacity 0.35s ease;
+}
+
+#rsvp-modal.hidden {
+  display: none !important;
+}
+
+#rsvp-modal:not(.hidden) {
+  display: flex !important;
+}
+
+#rsvp-modal .relative {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+
+#rsvp-modal.opacity-0 .relative {
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+}
+
+#rsvp-modal.opacity-100 .relative {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Custom scrollbar for scrollable modal content on Windows/Chrome */
+.card-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.card-scrollbar::-webkit-scrollbar-track {
+  background: rgba(120, 24, 40, 0.02);
+  border-radius: 8px;
+}
+.card-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.3);
+  border-radius: 8px;
+}
+.card-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.6);
+}
+
+/* Style for selected attendance option cards and indicator */
+.rsvp-opt-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rsvp-opt-card.selected-yes {
+  border-color: #781828 !important; /* Burgundy */
+  background-color: rgba(120, 24, 40, 0.04) !important;
+}
+.rsvp-opt-card.selected-yes .rsvp-circle-indicator {
+  border-color: #781828 !important;
+  background-color: #781828 !important;
+}
+.rsvp-opt-card.selected-yes .rsvp-circle-indicator svg {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
+.rsvp-opt-card.selected-yes .option-label-text {
+  color: #781828 !important;
+  font-weight: 600 !important;
+}
+
+.rsvp-opt-card.selected-no {
+  border-color: #781828 !important; /* Burgundy */
+  background-color: rgba(120, 24, 40, 0.04) !important;
+}
+.rsvp-opt-card.selected-no .rsvp-circle-indicator {
+  border-color: #781828 !important;
+  background-color: #781828 !important;
+}
+.rsvp-opt-card.selected-no .rsvp-circle-indicator svg {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
+.rsvp-opt-card.selected-no .option-label-text {
+  color: #781828 !important;
+  font-weight: 600 !important;
+}
+
+.rsvp-opt-card.unselected {
+  border-color: #e2e8f0 !important; /* slate-200 */
+  background-color: #ffffff !important;
+  opacity: 0.75;
+}
+.rsvp-opt-card.unselected .rsvp-circle-indicator {
+  border-color: #cbd5e1 !important; /* slate-300 */
+  background-color: #ffffff !important;
+}
+.rsvp-opt-card.unselected .rsvp-circle-indicator svg {
+  transform: scale(0) !important;
+  opacity: 0 !important;
+}
+.rsvp-opt-card.unselected .option-label-text {
+  color: #334155 !important; /* slate-700 */
+  font-weight: 500 !important;
+}
+
+/* Elegant slow pulsing glow and floating effect for floating RSVP button */
+@keyframes rsvp-float-glow {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 10px 30px -5px rgba(197, 160, 89, 0.5), 0 0 0 0 rgba(197, 160, 89, 0.25);
+  }
+  50% {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 30px -5px rgba(197, 160, 89, 0.7), 0 0 0 6px rgba(197, 160, 89, 0);
+  }
+}
+
+.rsvp-pulse-button {
+  animation: rsvp-float-glow 3s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+
+/* Pause the animation on hover and apply scale for interaction feedback */
+.rsvp-pulse-button:hover {
+  animation-play-state: paused;
+  transform: translateY(-4px) scale(1.02) !important;
+}
+
+.rsvp-pulse-button:active {
+  transform: translateY(-2px) scale(0.97) !important;
+}
+
+/* Elegant slow float for footer RSVP button */
+@keyframes footer-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.footer-btn-float {
+  animation: footer-float 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.footer-btn-float:hover {
+  animation-play-state: paused;
+  transform: translateY(-3px) scale(1.02) !important;
+}
+
+.footer-btn-float:active {
+  transform: translateY(-1px) scale(0.97) !important;
+}
+
+/* Custom header background centering rules to correct shifted circle in logochinh.png */
+.header-bg-custom {
+  background-image: url('https://res.cloudinary.com/dei5euvmf/image/upload/f_auto,q_auto/logochinh_wegtlm');
+  background-size: cover;
+  background-position: 46% center; /* Mobile default centering */
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 640px) {
+  .header-bg-custom {
+    background-position: 42% center;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-bg-custom {
+    background-position: 36% center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-bg-custom {
+    background-position: 25% center;
+  }
+}
+
+@media (min-width: 1280px) {
+  .header-bg-custom {
+    background-position: 20% center;
+  }
+}
+
+/* Custom gallery background with textured pattern */
+.gallery-bg-custom {
+  background-image: url('https://res.cloudinary.com/dei5euvmf/image/upload/f_auto,q_auto/N%E1%BB%81n_c%C3%B3_h%E1%BB%8Da_ti%E1%BA%BFt_wnesn4');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Custom 3D Coverflow gallery styling */
+#gallery-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.gallery-card-3d {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

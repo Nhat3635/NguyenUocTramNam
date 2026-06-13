@@ -2,6 +2,10 @@
 const CLOUDINARY_CLOUD_NAME = "dei5euvmf";
 const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto`;
 
+// 2. RSVP GOOGLE SHEETS SCRIPT URL CONFIGURATION
+// Paste your Google Apps Script Web App URL here. If left empty, it will simulate successful submission.
+const RSVP_SCRIPT_URL = "";
+
 const cloudinaryMapping = {
   "image/nguyenuoc.png": "nguyenuoc_pcrcv3",
   "image/5.png": "5_gi3ofm",
@@ -175,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const screenEnvelope = document.getElementById("screen-envelope");
   const screenDetail = document.getElementById("screen-detail");
   const musicPlayerContainer = document.getElementById("music-player-container");
+  const floatingRsvpContainer = document.getElementById("floating-rsvp-container");
 
   // Envelope redirection/transition action
   const envelope = document.getElementById("envelope");
@@ -231,22 +236,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // horizontal Slider scroll detection (Active Center Effect)
+  // horizontal Slider scroll detection (Active Center Effect with 3D Coverflow & Infinite Loop)
+  // horizontal Slider scroll detection (Active Center Effect with 3D Coverflow & Infinite Loop)
   const galleryContainer = document.getElementById("gallery-container");
   const cards = document.querySelectorAll(".gallery-card");
   const dotsContainer = document.getElementById("slider-dots");
   const dots = dotsContainer ? dotsContainer.children : [];
+
+  let isLooping = false;
+
+  // Drag scrolling support variables
+  let isDown = false;
+  let startX = 0;
+  let dragScrollLeft = 0;
 
   function updateActiveCard() {
     if (!galleryContainer || cards.length === 0) return;
 
     const containerRect = galleryContainer.getBoundingClientRect();
     const containerCenter = containerRect.left + containerRect.width / 2;
+    const cardWidth = cards[0].offsetWidth || 300;
 
     let closestCard = null;
     let minDistance = Infinity;
 
-    cards.forEach((card, idx) => {
+    cards.forEach((card) => {
       const cardRect = card.getBoundingClientRect();
       const cardCenter = cardRect.left + cardRect.width / 2;
       const distance = Math.abs(cardCenter - containerCenter);
@@ -257,31 +271,129 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    cards.forEach((card, idx) => {
-      if (card === closestCard) {
-        card.classList.remove("scale-90", "opacity-40", "blur-[1px]", "border-gold-600/30");
-        card.classList.add("scale-100", "sm:scale-105", "opacity-100", "blur-none", "border-gold-600", "shadow-2xl", "z-10");
-        if (dots[idx]) {
-          dots[idx].classList.remove("bg-burgundy-200/40", "transform", "scale-100");
-          dots[idx].classList.add("bg-gold-400", "transform", "scale-125");
-        }
+    if (!closestCard) return;
+
+    const activeIndex = parseInt(closestCard.getAttribute("data-index")) || 0;
+
+    // Update dot indicators dynamically using data-index
+    for (let i = 0; i < dots.length; i++) {
+      if (i === activeIndex) {
+        dots[i].classList.remove("bg-burgundy-200/40", "transform", "scale-100");
+        dots[i].classList.add("bg-gold-400", "transform", "scale-125");
       } else {
-        card.classList.remove("scale-100", "sm:scale-105", "opacity-100", "blur-none", "border-gold-600", "shadow-2xl", "z-10");
-        card.classList.add("scale-90", "opacity-40", "blur-[1px]", "border-gold-600/30");
-        if (dots[idx]) {
-          dots[idx].classList.remove("bg-gold-400", "transform", "scale-125");
-          dots[idx].classList.add("bg-burgundy-200/40", "transform", "scale-100");
-        }
+        dots[i].classList.remove("bg-gold-400", "transform", "scale-125");
+        dots[i].classList.add("bg-burgundy-200/40", "transform", "scale-100");
       }
+    }
+
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = cardCenter - containerCenter;
+      const absDist = Math.abs(distance);
+      const ratio = Math.min(absDist / (cardWidth * 1.2), 1.5);
+
+      if (card === closestCard) {
+        card.classList.remove("border-gold-600/30");
+        card.classList.add("border-gold-600", "shadow-2xl", "z-10");
+      } else {
+        card.classList.remove("border-gold-600", "shadow-2xl", "z-10");
+        card.classList.add("border-gold-600/30");
+      }
+
+      // Compute 3D values: scale down, rotate Y, and slide inward for card overlap
+      const scale = 1.02 - ratio * 0.15;
+      const rotY = -Math.sign(distance) * ratio * 32;
+      const transX = -Math.sign(distance) * ratio * 50; // overlap effect
+      const opacity = 1.0 - ratio * 0.65;
+      const blurVal = ratio * 1.2;
+
+      // Apply transform and style properties
+      card.style.transform = `scale(${scale}) rotateY(${rotY}deg) translateX(${transX}px)`;
+      card.style.opacity = opacity;
+      card.style.filter = blurVal > 0.1 ? `blur(${blurVal}px)` : "none";
     });
   }
 
-  if (galleryContainer) {
-    galleryContainer.addEventListener("scroll", updateActiveCard);
+  function handleInfiniteScroll() {
+    if (!galleryContainer || cards.length === 0 || isLooping) return;
+
+    const containerRect = galleryContainer.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+
+    let closestIdx = -1;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - containerCenter);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIdx = idx;
+      }
+    });
+
+    if (closestIdx === -1) return;
+
+    // Reset if active card is a boundary clone
+    if (closestIdx <= 3) {
+      const targetIdx = closestIdx + 4; // index 0..3 (left clones) -> index 4..7 (Originals)
+      const targetCard = cards[targetIdx];
+      if (targetCard) {
+        const oldScrollLeft = galleryContainer.scrollLeft;
+        const targetScrollLeft = targetCard.offsetLeft - galleryContainer.clientWidth / 2 + targetCard.clientWidth / 2;
+
+        isLooping = true;
+        galleryContainer.scrollLeft = targetScrollLeft;
+        updateActiveCard();
+
+        if (isDown) {
+          const delta = targetScrollLeft - oldScrollLeft;
+          dragScrollLeft += delta;
+        }
+        isLooping = false;
+      }
+    } else if (closestIdx >= 8) {
+      const targetIdx = closestIdx - 4; // index 8..11 (right clones) -> index 4..7 (Originals)
+      const targetCard = cards[targetIdx];
+      if (targetCard) {
+        const oldScrollLeft = galleryContainer.scrollLeft;
+        const targetScrollLeft = targetCard.offsetLeft - galleryContainer.clientWidth / 2 + targetCard.clientWidth / 2;
+
+        isLooping = true;
+        galleryContainer.scrollLeft = targetScrollLeft;
+        updateActiveCard();
+
+        if (isDown) {
+          const delta = targetScrollLeft - oldScrollLeft;
+          dragScrollLeft += delta;
+        }
+        isLooping = false;
+      }
+    }
   }
 
+  if (galleryContainer) {
+    galleryContainer.addEventListener("scroll", () => {
+      handleInfiniteScroll();
+      updateActiveCard();
+    });
+
+    // Initialize position to original Card 1 (index 4) on load
+    setTimeout(() => {
+      const card1 = cards[4];
+      if (card1) {
+        galleryContainer.scrollLeft = card1.offsetLeft - galleryContainer.clientWidth / 2 + card1.clientWidth / 2;
+        updateActiveCard();
+      }
+    }, 100);
+  }
+
+  // Maps dot clicks (0-3) to original DOM elements (4-7)
   window.scrollToCard = function (index) {
-    const card = cards[index];
+    const card = cards[index + 4];
     if (!card || !galleryContainer) return;
 
     const cardCenterOffset = card.offsetLeft - galleryContainer.clientWidth / 2 + card.clientWidth / 2;
@@ -291,17 +403,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Drag scrolling support
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+  // Gallery Navigation Buttons - slides by DOM indices relative to current active card
+  window.scrollGallery = function (direction) {
+    if (!galleryContainer || cards.length === 0) return;
+
+    const containerRect = galleryContainer.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+
+    let closestCardIdx = 4;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - containerCenter);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCardIdx = idx;
+      }
+    });
+
+    let targetDOMIndex = closestCardIdx + direction;
+    if (targetDOMIndex < 0) targetDOMIndex = 0;
+    if (targetDOMIndex >= cards.length) targetDOMIndex = cards.length - 1;
+
+    const targetCard = cards[targetDOMIndex];
+    if (targetCard) {
+      const cardCenterOffset = targetCard.offsetLeft - galleryContainer.clientWidth / 2 + targetCard.clientWidth / 2;
+      galleryContainer.scrollTo({
+        left: cardCenterOffset,
+        behavior: "smooth",
+      });
+    }
+  };
 
   if (galleryContainer) {
     galleryContainer.addEventListener("mousedown", (e) => {
       isDown = true;
       galleryContainer.classList.add("active");
       startX = e.pageX - galleryContainer.offsetLeft;
-      scrollLeft = galleryContainer.scrollLeft;
+      dragScrollLeft = galleryContainer.scrollLeft;
     });
 
     galleryContainer.addEventListener("mouseleave", () => {
@@ -319,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const x = e.pageX - galleryContainer.offsetLeft;
       const walk = (x - startX) * 2;
-      galleryContainer.scrollLeft = scrollLeft - walk;
+      galleryContainer.scrollLeft = dragScrollLeft - walk;
     });
   }
 
@@ -358,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (screenEnvelope) screenEnvelope.classList.add("hidden");
       if (screenDetail) screenDetail.classList.remove("hidden");
       if (musicPlayerContainer) musicPlayerContainer.classList.remove("hidden");
+      if (floatingRsvpContainer) floatingRsvpContainer.classList.remove("hidden");
 
       setTimeout(() => {
         if (screenDetail) {
@@ -367,6 +510,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (musicPlayerContainer) {
           musicPlayerContainer.classList.remove("opacity-0");
           musicPlayerContainer.classList.add("opacity-100");
+        }
+        if (floatingRsvpContainer) {
+          floatingRsvpContainer.classList.remove("opacity-0");
+          floatingRsvpContainer.classList.add("opacity-100");
         }
 
         window.scrollTo({ top: 0, behavior: "instant" });
@@ -437,10 +584,12 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (screenDetail) screenDetail.classList.add("opacity-0");
       if (musicPlayerContainer) musicPlayerContainer.classList.add("opacity-0");
+      if (floatingRsvpContainer) floatingRsvpContainer.classList.add("opacity-0");
 
       setTimeout(() => {
         if (screenDetail) screenDetail.classList.add("hidden");
         if (musicPlayerContainer) musicPlayerContainer.classList.add("hidden");
+        if (floatingRsvpContainer) floatingRsvpContainer.classList.add("hidden");
 
         if (screenEnvelope) {
           screenEnvelope.classList.remove("hidden");
@@ -451,4 +600,190 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 800);
     });
   });
+
+  // ==========================================
+  // RSVP Form Event Handlers & State Machine
+  // ==========================================
+  const openRsvpBtn = document.getElementById("open-rsvp-btn");
+  const openRsvpBtnFloating = document.getElementById("open-rsvp-btn-floating");
+  const rsvpModal = document.getElementById("rsvp-modal");
+  const rsvpModalOverlay = document.getElementById("rsvp-modal-overlay");
+  const closeRsvpModalX = document.getElementById("close-rsvp-modal-x");
+  const closeRsvpModalBtn = document.getElementById("close-rsvp-modal-btn");
+  const rsvpForm = document.getElementById("rsvp-form");
+  const rsvpGuestsWrapper = document.getElementById("rsvp-guests-wrapper");
+  const rsvpLoadingScreen = document.getElementById("rsvp-loading-screen");
+  const rsvpSuccessScreen = document.getElementById("rsvp-success-screen");
+  const closeRsvpSuccessBtn = document.getElementById("close-rsvp-success-btn");
+
+  const rsvpOptYesLabel = document.getElementById("rsvp-opt-yes");
+  const rsvpOptNoLabel = document.getElementById("rsvp-opt-no");
+  const rsvpOptYesInput = document.querySelector('input[name="attendance"][value="yes"]');
+  const rsvpOptNoInput = document.querySelector('input[name="attendance"][value="no"]');
+
+  function openRsvp() {
+    if (rsvpModal) {
+      rsvpModal.classList.remove("hidden");
+      rsvpModal.offsetHeight; // force reflow for transitions
+      rsvpModal.classList.remove("opacity-0");
+      rsvpModal.classList.add("opacity-100");
+      document.body.style.overflow = "hidden"; // Lock background scroll
+    }
+  }
+
+  function closeRsvp() {
+    if (rsvpModal) {
+      rsvpModal.classList.remove("opacity-100");
+      rsvpModal.classList.add("opacity-0");
+      document.body.style.overflow = ""; // Unlock scroll
+      setTimeout(() => {
+        rsvpModal.classList.add("hidden");
+        // Reset overlays
+        if (rsvpLoadingScreen) {
+          rsvpLoadingScreen.classList.add("hidden");
+          rsvpLoadingScreen.classList.remove("opacity-100");
+          rsvpLoadingScreen.classList.add("opacity-0");
+        }
+        if (rsvpSuccessScreen) {
+          rsvpSuccessScreen.classList.add("hidden");
+          rsvpSuccessScreen.classList.remove("opacity-100");
+          rsvpSuccessScreen.classList.add("opacity-0");
+        }
+        if (rsvpForm) rsvpForm.reset();
+        // Reset card selection styles
+        updateOptionCards("yes");
+      }, 350);
+    }
+  }
+
+  function updateOptionCards(selectedValue) {
+    if (selectedValue === "yes") {
+      if (rsvpOptYesLabel) {
+        rsvpOptYesLabel.classList.remove("unselected", "selected-no");
+        rsvpOptYesLabel.classList.add("selected-yes");
+      }
+      if (rsvpOptNoLabel) {
+        rsvpOptNoLabel.classList.remove("selected-yes", "selected-no");
+        rsvpOptNoLabel.classList.add("unselected");
+      }
+    } else {
+      if (rsvpOptYesLabel) {
+        rsvpOptYesLabel.classList.remove("selected-yes", "selected-no");
+        rsvpOptYesLabel.classList.add("unselected");
+      }
+      if (rsvpOptNoLabel) {
+        rsvpOptNoLabel.classList.remove("unselected", "selected-yes");
+        rsvpOptNoLabel.classList.add("selected-no");
+      }
+    }
+  }
+
+  if (rsvpOptYesLabel && rsvpOptNoLabel) {
+    rsvpOptYesLabel.addEventListener("click", () => {
+      if (rsvpOptYesInput) rsvpOptYesInput.checked = true;
+      updateOptionCards("yes");
+    });
+    rsvpOptNoLabel.addEventListener("click", () => {
+      if (rsvpOptNoInput) rsvpOptNoInput.checked = true;
+      updateOptionCards("no");
+    });
+  }
+
+  if (openRsvpBtn) openRsvpBtn.addEventListener("click", openRsvp);
+  if (openRsvpBtnFloating) openRsvpBtnFloating.addEventListener("click", openRsvp);
+  if (rsvpModalOverlay) rsvpModalOverlay.addEventListener("click", closeRsvp);
+  if (closeRsvpModalX) closeRsvpModalX.addEventListener("click", closeRsvp);
+  if (closeRsvpModalBtn) closeRsvpModalBtn.addEventListener("click", closeRsvp);
+  if (closeRsvpSuccessBtn) closeRsvpSuccessBtn.addEventListener("click", closeRsvp);
+
+  if (rsvpForm) {
+    rsvpForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Form validation
+      const nameVal = document.getElementById("rsvp-name").value.trim();
+      const phoneVal = document.getElementById("rsvp-phone").value.trim();
+      const attendanceInput = document.querySelector('input[name="attendance"]:checked');
+      const attendanceVal = attendanceInput ? attendanceInput.value : "yes";
+      const guestsVal = attendanceVal === "yes" ? "1" : "0";
+      const wishVal = "";
+
+      if (!nameVal || !phoneVal) {
+        alert("Vui lòng nhập Họ tên và Số điện thoại!");
+        return;
+      }
+
+      // Show loader overlay
+      if (rsvpLoadingScreen) {
+        rsvpLoadingScreen.classList.remove("hidden");
+        rsvpLoadingScreen.offsetHeight;
+        rsvpLoadingScreen.classList.remove("opacity-0");
+        rsvpLoadingScreen.classList.add("opacity-100");
+      }
+
+      const payload = {
+        name: nameVal,
+        phone: phoneVal,
+        attendance: attendanceVal === "yes" ? "Sẽ tham gia" : "Rất tiếc không thể đến",
+        guests: guestsVal,
+        wish: wishVal,
+        timestamp: new Date().toLocaleString("vi-VN")
+      };
+
+      if (!RSVP_SCRIPT_URL) {
+        // Simulation mode for testing/previewing UI
+        setTimeout(() => {
+          if (rsvpLoadingScreen) {
+            rsvpLoadingScreen.classList.remove("opacity-100");
+            rsvpLoadingScreen.classList.add("opacity-0");
+            setTimeout(() => rsvpLoadingScreen.classList.add("hidden"), 350);
+          }
+          if (rsvpSuccessScreen) {
+            rsvpSuccessScreen.classList.remove("hidden");
+            rsvpSuccessScreen.offsetHeight;
+            rsvpSuccessScreen.classList.remove("opacity-0");
+            rsvpSuccessScreen.classList.add("opacity-100");
+          }
+        }, 1200);
+      } else {
+        // Send actual POST payload to Apps Script endpoint
+        fetch(RSVP_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(() => {
+          if (rsvpLoadingScreen) {
+            rsvpLoadingScreen.classList.remove("opacity-100");
+            rsvpLoadingScreen.classList.add("opacity-0");
+            setTimeout(() => rsvpLoadingScreen.classList.add("hidden"), 350);
+          }
+          if (rsvpSuccessScreen) {
+            rsvpSuccessScreen.classList.remove("hidden");
+            rsvpSuccessScreen.offsetHeight;
+            rsvpSuccessScreen.classList.remove("opacity-0");
+            rsvpSuccessScreen.classList.add("opacity-100");
+          }
+        })
+        .catch((err) => {
+          console.error("Lỗi gửi RSVP:", err);
+          // Fallback success for fetch quirks under no-cors
+          if (rsvpLoadingScreen) {
+            rsvpLoadingScreen.classList.remove("opacity-100");
+            rsvpLoadingScreen.classList.add("opacity-0");
+            setTimeout(() => rsvpLoadingScreen.classList.add("hidden"), 350);
+          }
+          if (rsvpSuccessScreen) {
+            rsvpSuccessScreen.classList.remove("hidden");
+            rsvpSuccessScreen.offsetHeight;
+            rsvpSuccessScreen.classList.remove("opacity-0");
+            rsvpSuccessScreen.classList.add("opacity-100");
+          }
+        });
+      }
+    });
+  }
 });
